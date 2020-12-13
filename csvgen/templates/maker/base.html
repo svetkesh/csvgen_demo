@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <title>FakeCSV</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!-- Alternative to Bootstrap 3 Glyphicons -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  {# Fonts#}
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Russo+One" rel="stylesheet">
+</head>
+
+<body class='loader'>
+
+<nav class="navbar navbar-expand-lg bg-light techfont">
+  <div class="container">
+    <div class="navbar-nav align-items-center">
+
+      <a class="navbar-brand" href="#">FakeCSV</a>
+      <a class="nav-item nav-link"
+         href="{% url 'schema_list' %}">Schemas</a>
+    </div>
+    <div class="navbar-nav align-items-center ml-auto">
+      {% if user.is_authenticated %}
+
+        <a class="nav-link" href="{% url 'logout' %}"
+        >Logout: {{ user.username }}</a>
+        <div
+          style="visibility: hidden"
+          class="userId"
+        >{{ user.pk }}</div>
+      {% else %}
+        <span class="fa fa-user"
+              aria-hidden="true"></span></a>
+        <a class="nav-link"
+           href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+<div class="content container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="blog_posts">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="{% static 'csvgen/main.js' %}"></script>
+</body>
+</html>

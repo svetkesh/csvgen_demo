@@ -1,0 +1,32 @@
+{% extends 'maker/base.html' %}
+
+{% block content %}
+{% if schema %}
+  <p>{{ schema }}</p>
+
+  <p>{{ schema.name }}</p>
+  <p>{{ schema.author }}</p>
+  <p>{{ schema.modified }}</p>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+  {% for column in schema.column_set.all %}
+    {{ column }}<a class="btn btn-primary" href="{% url 'column_edit' pk=column.pk %}"><span class="fa fa-pencil"></span></a>
+    <br>
+  {% endfor %}
+
+  <a class="btn btn-primary" href="{% url 'schema_edit' pk=schema.pk %}"><span class="fa fa-pencil"></span></a>
+  <a class="btn btn-primary" href="{% url 'schema_remove' pk=schema.pk %}"><span class="fa fa-remove"></span></a>
+
+  <hr>
+  <a class="btn btn-primary btn-comment" href="{% url 'add_column_to_schema' pk=schema.pk %}">Add comment</a>
+  <div class="container"></div>
+
+
+
+
+{% else %}
+  <p>No schema.</p>
+{% endif %}
+
+{% endblock %}

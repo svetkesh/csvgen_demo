@@ -1,0 +1,38 @@
+{% extends 'maker/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+{% if schema %}
+<H1>{{ schema.name }}
+  <a class="btn btn-primary" href="{% url 'schema_edit' pk=schema.pk %}"><span class="fa fa-pencil"></span></a>
+  <a class="btn btn-primary" href="{% url 'schema_remove' pk=schema.pk %}"><span class="fa fa-remove"></span></a>
+</H1>
+<p>column separator: {{ schema.column_separator }}</p>
+<p>string character: {{ schema.string_character }}</p>
+<p>{{ schema.author }}, {{ schema.modified }}</p>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+  <H2>Columns</H2>
+  <table class="table">
+
+  <tbody>
+  {% for column in schema.column_set.all %}
+    <tr>
+      <th scope="row">{{ column.name }}</th>
+      <td>{{ column.type }}</td>
+      {% if column.start and column.end %}
+        <td>{{ column.start }} - {{ column.end }}</td>
+      {% endif %}
+      <td>Order: {{ column.order }}</td>
+      <td>
+        <a class="btn btn-primary" href="{% url 'column_edit' pk=column.pk %}"><span class="fa fa-pencil"></span></a>
+        <a class="btn btn-primary" href="{% url 'column_remove' pk=column.pk %}" ><span class="fa fa-remove"></span></a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+    <br>
+  <a class="btn btn-primary btn-comment" href="{% url 'add_column_to_schema' pk=schema.pk %}">Add column</a>
+  <div class="container"></div>

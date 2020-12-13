@@ -1,0 +1,76 @@
+{% extends 'maker/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-sm-6">
+      <H2>Schemas</H2>
+    </div>
+    <div class="col-sm-6">
+      <div class="input-group mb-3">
+        <input type="number"
+               id="quantity"
+               class="form-control"
+               placeholder="Quantity"
+               aria-label="Quantity"
+               aria-describedby="basic-addon2"
+               width="50px"
+               style="width: 40px"
+               min="1"
+               max="1000"
+        >
+        <div class="input-group-append">
+          <a class="btn btn-primary generate"
+             href="#" id="generate"
+          >Generate</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if schema_list %}
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Created</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for schema in schema_list %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <th scope="row">
+            <a class="btn btn-link schemaId"
+               href="{% url 'schema_detail' schema.id %}"
+               id="name{{ schema.id }}"
+            >{{ schema.name }}</a>
+          </th>
+          <th scope="row">{{ schema.modified }}</th>
+          <th scope="row">
+            <span
+              class="btn btn-info"
+              id="status{{ schema.id }}"
+            >Ready</span>
+          </th>
+          <th scope="row">
+            <a class="btn btn-link download "
+               href="" id="download{{ schema.pk }}"
+               style="visibility: hidden"
+            >Download</a>
+          </th>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No schema are available.</p>
+  {% endif %}
+  <hr>
+  <a class="btn btn-primary btn-comment"
+     href="{% url 'schema_new' %}">Add Schema</a>
+  <br>
+  <small>schema_list.html</small>
+{% endblock %}
